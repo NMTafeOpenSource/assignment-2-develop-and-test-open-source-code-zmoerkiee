@@ -1,4 +1,4 @@
-package vehiclestarter;
+package vehicool;
 
 public class FuelPurchase {
 	private double	fuelEconomy;

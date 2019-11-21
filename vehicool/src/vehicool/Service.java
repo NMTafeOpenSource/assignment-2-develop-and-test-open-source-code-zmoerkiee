@@ -1,4 +1,6 @@
-package vehiclestarter;
+package vehicool;
+
+import java.time.LocalDate;
 
 public class Service {
     
@@ -7,7 +9,7 @@ public class Service {
     
     private int lastServiceOdometerKm=0;
     private int serviceCount=0;
-    // TODO add lastServiceDate
+    private LocalDate lastServiceDate;
     
     // return the last service
     public int getLastServiceOdometerKm()

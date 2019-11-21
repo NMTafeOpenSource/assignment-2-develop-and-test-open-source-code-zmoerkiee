@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vehiclestarter;
+package vehicool;
 
 import java.util.Random;
 
@@ -18,7 +18,7 @@ public class VehicleStarter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {        
-        Vehicle v = new Vehicle("Ford", "T812", 2014);
+        Vehicle v = new Vehicle("Ford", "Taurus", 1996, "1EPK496", 200000, 40.0);
 		
 		// Vehicle sample distance
             v.addFuel(new Random().nextDouble()*10, 1.3);
