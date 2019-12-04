@@ -7,6 +7,7 @@ package vehicool;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -14,11 +15,29 @@ import static org.junit.Assert.*;
  */
 public class FuelPurchaseTest {
     
-    public FuelPurchaseTest() {
+    FuelPurchase frank;
+    
+    @Before
+    public void initialize(){
+        frank = new FuelPurchase();
     }
 
     @Test
-    public void testPurchaseFuel() {
+    public void testFuelEcGreaterThanZero() {
+        double fEc = frank.fuelEconomy(12345, 45678);
+        assertEquals(27.02613949822672, fEc, 0);
+    }
+
+    @Test
+    public void testFuelEcLessThanZero() {
+        double fEc = frank.fuelEconomy(-12345, 45678);
+        assertEquals(0, fEc, 0);
+    }
+
+    @Test
+    public void testFuelEcEqualsZero() {
+        double fEc = frank.fuelEconomy(0, 45678);
+        assertEquals(0, fEc, 0);
     }
     
 }

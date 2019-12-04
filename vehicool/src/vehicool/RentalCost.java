@@ -12,19 +12,13 @@ package vehicool;
 public class RentalCost {
     private final double rate;
     private final int days;
-    private final int distance;
     
-    public RentalCost(double rate, int days, int distance){
+    public RentalCost(double rate, int days){
         this.rate = rate;
         this.days = days;
-        this.distance = distance;
     }
     
     public double CalculateByDays(){
         return rate * days;
-    }
-    
-    public double CalculateByDist(){
-        return rate * distance;
     }
 }

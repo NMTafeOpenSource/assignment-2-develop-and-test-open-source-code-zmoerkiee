@@ -18,12 +18,12 @@ public class VehicleStarter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {        
-        Vehicle v = new Vehicle("Ford", "Taurus", 1996, "1EPK496", 200000, 40.0);
+        Vehicle v = new Vehicle("Ford", "Taurus", 1996, "1EPK496", 200000, 40, 22);
 		
 		// Vehicle sample distance
-            v.addFuel(new Random().nextDouble()*10, 1.3);
+            v.addFuel(new Random().nextInt()*10, 1);
 
-            v.printDetails();                
+            v.saveDetails();                
             System.out.println("\n\n");
     }
     

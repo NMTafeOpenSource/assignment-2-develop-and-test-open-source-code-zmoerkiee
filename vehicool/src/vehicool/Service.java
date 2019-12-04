@@ -1,47 +1,44 @@
 package vehicool;
 
-import java.time.LocalDate;
-
 public class Service {
     
     // Constant to indicate that the vehicle needs to be serviced every 10,000km
     public static final int SERVICE_KILOMETER_LIMIT = 10000;
     
-    private int lastServiceOdometerKm=0;
-    private int serviceCount=0;
-    private LocalDate lastServiceDate;
-    
-    // return the last service
-    public int getLastServiceOdometerKm()
-    {
-        return this.lastServiceOdometerKm;
-    }    
-    
     /**
-     * The function recordService expects the total distance traveled by the car, 
-     * saves it and increase serviceCount.
-     * @param distance 
+     * Takes two ints to determine whether or not the vehicle is due for a
+     * service
+     * @param odo
+     * @param sCount
+     * @return 
      */
-    public void recordService(int distance)
-    {
-        this.lastServiceOdometerKm = distance;
-        this.serviceCount ++;
-    }
-    
-    // return how many services the car has had
-    public int getServiceCount()
-    {
-        return this.serviceCount;
+    public boolean serviceNeeded(int odo, int sCount){
+        boolean needy = false;
+        int savrg = odo / SERVICE_KILOMETER_LIMIT;
+        
+        if(sCount <= savrg && odo >= 10000){
+            needy = true;
+        }
+        
+        return needy;
     }
     
     /**
-     * Calculates the total services by dividing kilometers by
-     * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 
-     * 
-     * @return the number of services needed per SERVICE_KILOMETER_LIMIT
+     * Takes two ints and provides a string to tell the user if the vehicle
+     * is due for a service
+     * @param odo
+     * @param sCount
+     * @return 
      */
-    public int getTotalScheduledServices() {
-            return (int) Math.floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
+    public String printServiceNeeded(int odo, int sCount){
+        String teller;
+        if(serviceNeeded(odo, sCount)){
+            teller = "This vehicle is due for a service.";
+        } else{
+            teller = "This vehicle does not need a service.";
+        }
+        
+        return teller;
     }
     
 }
