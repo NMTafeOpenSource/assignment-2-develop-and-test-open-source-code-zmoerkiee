@@ -193,16 +193,22 @@ public class FXMLDocumentController implements Initializable {
                 case(0):
                     if(fuelVerify()){
                         fuelBuy(s2);
+                        compT1.setText("");
+                        compT2.setText("");
                     }
                     break;
                 case(1):
                     if(rentVerify()){
                         makeRent(s2);
+                        compT1.setText("");
+                        compT2.setText("");
+                        compT3.setText("");
                     }
                     break;
                 case(2):
                     if(serviceVerify()){
                         makeService(s2);
+                        compT1.setText("");
                     }
                     break;
             }
