@@ -24,44 +24,50 @@ public class ServiceTest {
 
     @Test
     public void testServiceNeededGreater() {
-        boolean needsService = sally.serviceNeeded(30000, 1);
+        boolean needsService = sally.serviceNeeded(35000, 20000);
         assertEquals(true, needsService);
     }
 
     @Test
     public void testServiceNeededLesser() {
-        boolean needsNoService = sally.serviceNeeded(10000, 2);
+        boolean needsNoService = sally.serviceNeeded(10000, 20000);
         assertEquals(false, needsNoService);
     }
 
     @Test
     public void testServiceNeededEqual() {
-        boolean needsService = sally.serviceNeeded(20000, 2);
-        assertEquals(true, needsService);
+        boolean needsNoService = sally.serviceNeeded(20000, 20000);
+        assertEquals(false, needsNoService);
     }
 
     @Test
-    public void testServiceNeededsub10k() {
-        boolean needsService = sally.serviceNeeded(4956, 2);
-        assertEquals(false, needsService);
+    public void testServiceNeededExact() {
+        boolean needsService = sally.serviceNeeded(30000, 20000);
+        assertEquals(true, needsService);
     }
     
     @Test
-    public void testprintServiceNeededGreater() {
-        String needsService = sally.printServiceNeeded(30000, 1);
+    public void testPrintServiceNeededGreater() {
+        String needsService = sally.printServiceNeeded(35000, 10000);
         assertEquals("This vehicle is due for a service.", needsService);
     }
 
     @Test
-    public void testprintServiceNeededLesser() {
-        String needsNoService = sally.printServiceNeeded(10000, 2);
+    public void testPrintServiceNeededLesser() {
+        String needsNoService = sally.printServiceNeeded(10000, 20000);
         assertEquals("This vehicle does not need a service.", needsNoService);
     }
 
     @Test
-    public void testprintServiceNeededEqual() {
-        String needsService = sally.printServiceNeeded(20000, 2);
+    public void testPrintServiceNeededExact() {
+        String needsService = sally.printServiceNeeded(30000, 20000);
         assertEquals("This vehicle is due for a service.", needsService);
+    }
+
+    @Test
+    public void testPrintServiceNeededEqual() {
+        String needsNoService = sally.printServiceNeeded(20000, 20000);
+        assertEquals("This vehicle does not need a service.", needsNoService);
     }
     
 }
