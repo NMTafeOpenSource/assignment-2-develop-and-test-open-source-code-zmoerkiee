@@ -9,14 +9,14 @@ public class Service {
      * Takes two ints to determine whether or not the vehicle is due for a
      * service
      * @param odo
-     * @param sCount
+     * @param lastServiceKM
      * @return 
      */
-    public boolean serviceNeeded(int odo, int sCount){
+    public boolean serviceNeeded(int odo, int lastServiceKM){
         boolean needy = false;
-        int savrg = odo / SERVICE_KILOMETER_LIMIT;
+        int odoDelta = odo - lastServiceKM;
         
-        if(sCount <= savrg && odo >= 10000){
+        if(odoDelta >= SERVICE_KILOMETER_LIMIT){
             needy = true;
         }
         
@@ -27,12 +27,12 @@ public class Service {
      * Takes two ints and provides a string to tell the user if the vehicle
      * is due for a service
      * @param odo
-     * @param sCount
+     * @param lastServiceKM
      * @return 
      */
-    public String printServiceNeeded(int odo, int sCount){
+    public String printServiceNeeded(int odo, int lastServiceKM){
         String teller;
-        if(serviceNeeded(odo, sCount)){
+        if(serviceNeeded(odo, lastServiceKM)){
             teller = "This vehicle is due for a service.";
         } else{
             teller = "This vehicle does not need a service.";

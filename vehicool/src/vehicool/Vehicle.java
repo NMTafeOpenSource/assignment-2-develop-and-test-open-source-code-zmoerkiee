@@ -187,7 +187,7 @@ public class Vehicle {
                     + odo + "\nTotal services: " + serviceCount + "\nTotal revenue: $"
                     + moneyEarned + "\nTotal cost: $" + moneySpent + "\nTotal profit: $"
                     + profitCalc() + "\n" + sally.printServiceNeeded(odo,
-                    serviceCount) + "\nDistance traveled since last service: "
+                    lastServiceKM) + "\nDistance traveled since last service: "
                     + jeb.distance(odo, lastServiceKM) + "km\nFuel economy: "
                     + frank.fuelEconomy(fuelSpent, odo) + "L per 100KM";
             return details;
