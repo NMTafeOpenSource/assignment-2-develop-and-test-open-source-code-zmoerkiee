@@ -37,7 +37,7 @@
       </Label>
       <Label fx:id="quantL" layoutX="431.0" layoutY="290.0" text="Quantity:" visible="false" />
       <Label fx:id="priceL" layoutX="431.0" layoutY="321.0" text="Price:" visible="false" />
-      <Label fx:id="distanceL" layoutX="432.0" layoutY="290.0" text="Distance:" visible="false" />
+      <Label fx:id="distanceL" layoutX="432.0" layoutY="290.0" text="Odometer reading:" visible="false" />
       <Label fx:id="consumeL" layoutX="432.0" layoutY="321.0" text="Fuel consumed:" visible="false" />
       <Label fx:id="daysL" layoutX="432.0" layoutY="355.0" text="Days rented:" visible="false" />
       <Label fx:id="servkmL" layoutX="432.0" layoutY="290.0" text="Service cost:" visible="false" />
