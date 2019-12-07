@@ -6,7 +6,9 @@
 package vehicool;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,6 +34,8 @@ import javafx.stage.Stage;
 public class FXMLDocumentController implements Initializable {
     
     ArrayList<Vehicle> vehicles;
+    File vile;
+    Verifier veg;
     
     @FXML
     private ListView vehicleListView;
@@ -104,6 +108,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         vehicles = new ArrayList<>();
+        vile = new File("Saves/Saves.txt");
+        veg = new Verifier();
         
         compseView.getItems().add("Fuel Purchase");
         compseView.getItems().add("Rental");
@@ -111,30 +117,16 @@ public class FXMLDocumentController implements Initializable {
         vehicleListView.getItems().add("New Vehicle");
         vehicleListView.getSelectionModel().select(0);
         
+        try {
+            loadFromVile();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //Loads saved data from plain text doc
         loadB.setOnAction((ActionEvent event) -> {
-            Verifier veg = new Verifier();
-            vehicleListView.getSelectionModel().clearSelection();
-            vehicleListView.getItems().clear();
-            FileChooser chump = new FileChooser();
-            chump.setTitle("Open File");
-            File fairu = chump.showOpenDialog(new Stage());
             try {
-                if(veg.chkValidLoadFile(fairu)){
-                    ProductionLine detroit = new ProductionLine(fairu);
-                    ArrayList<Vehicle> vs;
-                    try {
-                        vehicles = detroit.Factory();
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    vListReset(0);
-                } else {
-                    Alert a = new Alert(AlertType.INFORMATION);
-                    a.setContentText("Invalid file.");
-                    a.show();
-                    vListReset(0);
-                }
+                loadFromVile();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -142,19 +134,25 @@ public class FXMLDocumentController implements Initializable {
         
         //Saves all vehicles recorded in the current session to plain text doc
         saveB.setOnAction((ActionEvent event) -> {
-            FileChooser chooser = new FileChooser();
-            chooser.setTitle("Open File");
-            File fillip = chooser.showOpenDialog(new Stage());
-            if (fillip != null){
-            SaveGame sally = new SaveGame(fillip.getAbsolutePath());
-            ArrayList<Vehicle> vs = vehicles;
+            if(!vehicles.isEmpty()){
                 try {
-                    for (Vehicle v : vehicles) {
-                        sally.Save(v.saveDetails());
-                    }
-                } catch (IOException ex) {
+                    new PrintWriter(vile).close();
+                } catch (FileNotFoundException ex) {
                     Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                SaveGame sally = new SaveGame(vile);
+                vehicles.forEach((v) -> {
+                    try {
+                        sally.Save(v.saveDetails());
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+                vListReset(0);
+            } else{
+                Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("You have no vehicle data to save!");
+                a.show();
             }
         });
         
@@ -191,7 +189,6 @@ public class FXMLDocumentController implements Initializable {
         paramB.setOnAction((ActionEvent event) -> {
             int s = compseView.getSelectionModel().getSelectedIndex();
             int s2 = vehicleListView.getSelectionModel().getSelectedIndex();
-            Verifier veg = new Verifier();
             switch(s){
                 case(0):
                     if(fuelVerify()){
@@ -307,6 +304,21 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
+    public void loadFromVile() throws IOException{
+        if(veg.chkValidLoadFile(vile)){
+            vehicleListView.getSelectionModel().clearSelection();
+            vehicleListView.getItems().clear();
+            ProductionLine pat = new ProductionLine(vile);
+            vehicles = pat.Factory();
+            vListReset(0);
+        } else {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setContentText("Invalid file.");
+            a.show();
+            vListReset(0);
+        }
+    }
+    
     /*
     Displays information about the selected vehicle and activates UI elements
     to accept user updates
@@ -388,7 +400,6 @@ public class FXMLDocumentController implements Initializable {
         boolean fuelVal = true;
         boolean rateVal = true;
         
-        Verifier veg = new Verifier();
         Alert a = new Alert(AlertType.INFORMATION);
         
         if(!veg.chkString(makeT.getText())){
@@ -459,8 +470,6 @@ public class FXMLDocumentController implements Initializable {
         boolean quantValid = true;
         boolean priceValid = true;
         
-        Verifier veg = new Verifier();
-        
         if(!veg.chkDub(compT1.getText())){
             quantValid = false;
         }
@@ -490,9 +499,9 @@ public class FXMLDocumentController implements Initializable {
     
     //Records user inputs for rental information
     private void makeRent(int s){
-        int time = Integer.parseInt(compT1.getText());
-        int odo = Integer.parseInt(compT2.getText());
-        double fuel = Double.parseDouble(compT3.getText());
+        int odo = Integer.parseInt(compT1.getText());
+        double fuel = Double.parseDouble(compT2.getText());
+        int time = Integer.parseInt(compT3.getText());
         vehicles.get(s).recRental(time, odo, fuel);
     }
     
@@ -502,9 +511,7 @@ public class FXMLDocumentController implements Initializable {
         boolean odoValid = true;
         boolean fuelValid = true;
         
-        Verifier veg = new Verifier();
-        
-        if(!veg.chkInt(compT1.getText())){
+        if(!veg.chkInt(compT3.getText())){
             timeValid = false;
         }
         if(!veg.chkInt(compT2.getText())){
@@ -548,8 +555,6 @@ public class FXMLDocumentController implements Initializable {
     //Verifies user inputs for service information
     private boolean serviceVerify(){
         boolean costValid = true;
-        
-        Verifier veg = new Verifier();
         
         if(!veg.chkDub(compT1.getText())){
             costValid = false;
