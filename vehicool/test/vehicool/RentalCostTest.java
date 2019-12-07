@@ -7,6 +7,7 @@ package vehicool;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -14,19 +15,16 @@ import static org.junit.Assert.*;
  */
 public class RentalCostTest {
     
-    public RentalCostTest() {
+    RentalCost renter;
+    
+    @Before
+    public void initialize(){
+        renter = new RentalCost(200.0, 2);
     }
 
     @Test
     public void testCalculateByDays() {
-        RentalCost renter = new RentalCost(200.0, 2, 3000);
         assertEquals(400.0, renter.CalculateByDays(), 0.0);
-    }
-
-    @Test
-    public void testCalculateByDist() {
-        RentalCost renter = new RentalCost(2.0, 2, 3000);
-        assertEquals(6000.0, renter.CalculateByDist(), 0.0);
     }
     
 }
